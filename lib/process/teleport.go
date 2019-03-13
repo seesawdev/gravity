@@ -17,6 +17,8 @@ limitations under the License.
 package process
 
 import (
+	"fmt"
+
 	"github.com/gravitational/gravity/lib/defaults"
 	"github.com/gravitational/gravity/lib/ops/opsservice"
 	"github.com/gravitational/gravity/lib/processconfig"
@@ -124,6 +126,7 @@ func (p *Process) getOrInitAuthGatewayConfig() (storage.AuthGateway, error) {
 	}
 	// Initially the local cluster name is set as a principal.
 	authGateway.SetPublicAddrs([]string{cluster.Domain})
+	authGateway.SetKubernetesPublicAddrs([]string{fmt.Sprintf("*.%v", cluster.Domain)})
 	err = opsservice.UpsertAuthGateway(client, p.identity, authGateway)
 	if err != nil {
 		return nil, trace.Wrap(err)

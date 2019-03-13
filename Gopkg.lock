@@ -885,7 +885,7 @@
 
 [[projects]]
   branch = "branch/3.0-g"
-  digest = "1:bf5e14e016e5cceb1b2f7eda1f1a455021c333becd28dd986764cf9bbc7659bb"
+  digest = "1:c429829affa1f2f47c45285aee53290217fafad616b7ada6b734dc133b1f938e"
   name = "github.com/gravitational/teleport"
   packages = [
     ".",
@@ -909,6 +909,7 @@
     "lib/httplib",
     "lib/httplib/csrf",
     "lib/kube/authority",
+    "lib/kube/client",
     "lib/kube/proxy",
     "lib/kube/utils",
     "lib/limiter",
@@ -2513,6 +2514,7 @@
     "github.com/gravitational/teleport/lib/fixtures",
     "github.com/gravitational/teleport/lib/httplib",
     "github.com/gravitational/teleport/lib/httplib/csrf",
+    "github.com/gravitational/teleport/lib/kube/client",
     "github.com/gravitational/teleport/lib/modules",
     "github.com/gravitational/teleport/lib/reversetunnel",
     "github.com/gravitational/teleport/lib/service",

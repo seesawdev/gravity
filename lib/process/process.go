@@ -1240,6 +1240,7 @@ func (p *Process) initService(ctx context.Context) (err error) {
 		Authenticator:       p.handlers.WebProxy.GetHandler().AuthenticateRequest,
 		Backend:             p.backend,
 		PublicAdvertiseAddr: p.cfg.Pack.GetPublicAddr(),
+		EventBroadcaster:    p,
 	})
 	if err != nil {
 		return trace.Wrap(err)

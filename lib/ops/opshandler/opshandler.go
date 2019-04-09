@@ -41,6 +41,7 @@ import (
 
 	"github.com/gravitational/roundtrip"
 	telehttplib "github.com/gravitational/teleport/lib/httplib"
+	teleservice "github.com/gravitational/teleport/lib/service"
 	teleservices "github.com/gravitational/teleport/lib/services"
 	"github.com/gravitational/teleport/lib/utils"
 	"github.com/gravitational/trace"
@@ -67,6 +68,9 @@ type WebHandlerConfig struct {
 	Devmode bool
 	// PublicAdvertiseAddr is the process public advertise address
 	PublicAdvertiseAddr utils.NetAddr
+	// EventBroadcaster specifies the event broadcaster instance
+	// to dispatch events
+	EventBroadcaster
 }
 
 type WebHandler struct {
@@ -298,6 +302,13 @@ func NewWebHandler(cfg WebHandlerConfig) (*WebHandler, error) {
 		h.needsAuth(h.emitAuditEvent))
 
 	return h, nil
+}
+
+// EventBroadcaster allows to dispatch gravity process events
+type EventBroadcaster interface {
+	// BroadcastEvent generates event and broadcasts it to all
+	// subscribed parties
+	BroadcastEvent(teleservice.Event)
 }
 
 func (h *WebHandler) options(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
@@ -990,6 +1001,7 @@ func (h *WebHandler) completeFinalInstallStep(w http.ResponseWriter, r *http.Req
 	if err := context.Operator.CompleteFinalInstallStep(req); err != nil {
 		return trace.Wrap(err)
 	}
+	h.cfg.EventBroadcaster.BroadcastEvent(teleservice.Event{Name: constants.FinalInstallStepCompletedEvent})
 	roundtrip.ReplyJSON(w, http.StatusOK, statusOK("site final install step has been completed"))
 	return nil
 }

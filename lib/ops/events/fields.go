@@ -43,6 +43,66 @@ func (f Fields) WithField(field string, value interface{}) Fields {
 
 // EventForOperation returns an appropriate event for the provided operation.
 func EventForOperation(operation ops.SiteOperation) (events.Event, error) {
+	switch operation.Type {
+	case ops.OperationInstall:
+		if operation.IsCompleted() {
+			return OperationInstallStart, nil
+		} else if operation.IsFailed() {
+			return OperationInstallFailure, nil
+		}
+		return OperationInstallComplete, nil
+	case ops.OperationExpand:
+		if operation.IsCompleted() {
+			return OperationExpandStart, nil
+		} else if operation.IsFailed() {
+			return OperationExpandFailure, nil
+		}
+		return OperationExpandComplete, nil
+	case ops.OperationShrink:
+		if operation.IsCompleted() {
+			return OperationShrinkStart, nil
+		} else if operation.IsFailed() {
+			return OperationShrinkFailure, nil
+		}
+		return OperationShrinkComplete, nil
+	case ops.OperationUpdate:
+		if operation.IsCompleted() {
+			return OperationUpdateStart, nil
+		} else if operation.IsFailed() {
+			return OperationUpdateFailure, nil
+		}
+		return OperationUpdateComplete, nil
+	case ops.OperationUninstall:
+		if operation.IsCompleted() {
+			return OperationUninstallStart, nil
+		} else if operation.IsFailed() {
+			return OperationUninstallFailure, nil
+		}
+		return OperationUninstallComplete, nil
+	case ops.OperationGarbageCollect:
+		if operation.IsCompleted() {
+			return OperationGCStart, nil
+		} else if operation.IsFailed() {
+			return OperationGCFailure, nil
+		}
+		return OperationGCComplete, nil
+	case ops.OperationUpdateRuntimeEnviron:
+		if operation.IsCompleted() {
+			return OperationEnvStart, nil
+		} else if operation.IsFailed() {
+			return OperationEnvFailure, nil
+		}
+		return OperationEnvComplete, nil
+	case ops.OperationUpdateConfig:
+		if operation.IsCompleted() {
+			return OperationConfigStart, nil
+		} else if operation.IsFailed() {
+			return OperationConfigFailure, nil
+		}
+		return OperationConfigComplete, nil
+	}
+	return events.Event{}, trace.NotFound(
+		"operation does not have corresponding event: %v", operation)
 }
 
 // FieldsForOperation returns event fields for the provided operation.

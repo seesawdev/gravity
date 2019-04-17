@@ -28,6 +28,7 @@ import (
 	"github.com/gravitational/gravity/lib/storage/clusterconfig"
 
 	"github.com/fatih/color"
+	teleevents "github.com/gravitational/teleport/lib/events"
 	teleservices "github.com/gravitational/teleport/lib/services"
 	"github.com/gravitational/trace"
 )
@@ -92,6 +93,7 @@ func (r *Resources) Create(ctx context.Context, req resources.CreateRequest) err
 			return trace.Wrap(err)
 		}
 		r.Printf("Created Github connector %q\n", conn.GetName())
+		r.EmitAuditEvent(ctx, events.ResourceGithubConnectorCreated, req.Resource.Kind, req.Resource.Metadata.Name, req.Owner)
 	case teleservices.KindUser:
 		user, err := teleservices.GetUserMarshaler().UnmarshalUser(req.Resource.Raw)
 		if err != nil {
@@ -101,6 +103,7 @@ func (r *Resources) Create(ctx context.Context, req resources.CreateRequest) err
 			return trace.Wrap(err)
 		}
 		r.Printf("Created user %q\n", user.GetName())
+		r.EmitAuditEvent(ctx, events.ResourceUserCreated, req.Resource.Kind, req.Resource.Metadata.Name, req.Owner)
 	case storage.KindToken:
 		token, err := storage.GetTokenMarshaler().UnmarshalToken(req.Resource.Raw)
 		if err != nil {
@@ -128,6 +131,7 @@ func (r *Resources) Create(ctx context.Context, req resources.CreateRequest) err
 		req.Owner = token.GetUser()
 		// do not print token here as a security precaution
 		r.Printf("Created token for user %q\n", token.GetUser())
+		r.EmitAuditEvent(ctx, events.ResourceTokenCreated, req.Resource.Kind, req.Resource.Metadata.Name, req.Owner)
 	case storage.KindLogForwarder:
 		forwarder, err := storage.GetLogForwarderMarshaler().Unmarshal(req.Resource.Raw)
 		if err != nil {
@@ -138,19 +142,20 @@ func (r *Resources) Create(ctx context.Context, req resources.CreateRequest) err
 			return trace.Wrap(err)
 		}
 		err = r.Operator.CreateLogForwarder(r.cluster.Key(), forwarder)
-		if err == nil {
-			r.Printf("Created log forwarder %q\n", forwarder.GetName())
-			return nil
+		if err != nil && !trace.IsAlreadyExists(err) {
+			return trace.Wrap(err)
 		}
-		if trace.IsAlreadyExists(err) && req.Upsert {
+		if trace.IsAlreadyExists(err) {
+			if !req.Upsert {
+				return trace.Wrap(err)
+			}
 			err := r.Operator.UpdateLogForwarder(r.cluster.Key(), forwarder)
 			if err != nil {
 				return trace.Wrap(err)
 			}
-			r.Printf("Updated log forwarder %q\n", forwarder.GetName())
-			return nil
 		}
-		return trace.Wrap(err)
+		r.Printf("Created log forwarder %q\n", forwarder.GetName())
+		r.EmitAuditEvent(ctx, events.ResourceLogForwarderCreated, req.Resource.Kind, req.Resource.Metadata.Name, req.Owner)
 	case storage.KindTLSKeyPair:
 		keyPair, err := storage.UnmarshalTLSKeyPair(req.Resource.Raw)
 		if err != nil {
@@ -169,6 +174,7 @@ func (r *Resources) Create(ctx context.Context, req resources.CreateRequest) err
 			return trace.Wrap(err)
 		}
 		r.Println("Updated TLS keypair")
+		r.EmitAuditEvent(ctx, events.ResourceTLSKeyPairCreated, req.Resource.Kind, req.Resource.Metadata.Name, req.Owner)
 	case teleservices.KindClusterAuthPreference:
 		r.Println(color.YellowString("Cluster auth preference resource is " +
 			"obsolete and will be removed in a future release. Please use " +
@@ -181,6 +187,7 @@ func (r *Resources) Create(ctx context.Context, req resources.CreateRequest) err
 			return trace.Wrap(err)
 		}
 		r.Println("Updated cluster authentication preference")
+		r.EmitAuditEvent(ctx, events.ResourceAuthPreferenceCreated, req.Resource.Kind, req.Resource.Metadata.Name, req.Owner)
 	case storage.KindSMTPConfig:
 		config, err := storage.UnmarshalSMTPConfig(req.Resource.Raw)
 		if err != nil {
@@ -194,6 +201,7 @@ func (r *Resources) Create(ctx context.Context, req resources.CreateRequest) err
 			return trace.Wrap(err)
 		}
 		r.Println("Updated cluster SMTP configuration")
+		r.EmitAuditEvent(ctx, events.ResourceSMTPConfigCreated, req.Resource.Kind, req.Resource.Metadata.Name, req.Owner)
 	case storage.KindAlert:
 		alert, err := storage.UnmarshalAlert(req.Resource.Raw)
 		if err != nil {
@@ -207,6 +215,7 @@ func (r *Resources) Create(ctx context.Context, req resources.CreateRequest) err
 			return trace.Wrap(err)
 		}
 		r.Printf("Updated monitoring alert %q\n", alert.GetName())
+		r.EmitAuditEvent(ctx, events.ResourceAlertCreated, req.Resource.Kind, req.Resource.Metadata.Name, req.Owner)
 	case storage.KindAlertTarget:
 		target, err := storage.UnmarshalAlertTarget(req.Resource.Raw)
 		if err != nil {
@@ -220,6 +229,7 @@ func (r *Resources) Create(ctx context.Context, req resources.CreateRequest) err
 			return trace.Wrap(err)
 		}
 		r.Printf("Updated monitoring alert target %q\n", target.GetName())
+		r.EmitAuditEvent(ctx, events.ResourceAlertTargetCreated, req.Resource.Kind, req.Resource.Metadata.Name, req.Owner)
 	case storage.KindAuthGateway:
 		gw, err := storage.UnmarshalAuthGateway(req.Resource.Raw)
 		if err != nil {
@@ -230,6 +240,7 @@ func (r *Resources) Create(ctx context.Context, req resources.CreateRequest) err
 			return trace.Wrap(err)
 		}
 		r.Println("Updated auth gateway configuration")
+		r.EmitAuditEvent(ctx, events.ResourceAuthGatewayCreated, req.Resource.Kind, req.Resource.Metadata.Name, req.Owner)
 	case storage.KindRuntimeEnvironment, storage.KindClusterConfiguration:
 		err := r.ClusterOperationHandler.UpdateResource(req)
 		return trace.Wrap(err)
@@ -239,10 +250,6 @@ func (r *Resources) Create(ctx context.Context, req resources.CreateRequest) err
 		return trace.BadParameter("unsupported resource %q, supported are: %v",
 			req.Resource.Kind, modules.GetResources().SupportedResources())
 	}
-	r.EmitAuditEvent(ctx, events.ResourceCreated,
-		req.Resource.Kind,
-		req.Resource.Metadata.Name,
-		req.Owner)
 	return nil
 }
 
@@ -410,6 +417,7 @@ func (r *Resources) Remove(ctx context.Context, req resources.RemoveRequest) err
 			return trace.Wrap(err)
 		}
 		r.Printf("Github connector %q has been deleted\n", req.Name)
+		r.EmitAuditEvent(ctx, events.ResourceGithubConnectorDeleted, req.Kind, req.Name, req.Owner)
 	case teleservices.KindUser:
 		if err := r.Operator.DeleteUser(r.cluster.Key(), req.Name); err != nil {
 			if trace.IsNotFound(err) && req.Force {
@@ -418,6 +426,7 @@ func (r *Resources) Remove(ctx context.Context, req resources.RemoveRequest) err
 			return trace.Wrap(err)
 		}
 		r.Printf("User %q has been deleted\n", req.Name)
+		r.EmitAuditEvent(ctx, events.ResourceUserDeleted, req.Kind, req.Name, req.Owner)
 	case storage.KindToken:
 		user := req.Owner
 		if user == "" {
@@ -432,6 +441,7 @@ func (r *Resources) Remove(ctx context.Context, req resources.RemoveRequest) err
 			return trace.Wrap(err)
 		}
 		r.Printf("Token %q has been deleted for user %q\n", req.Name, user)
+		r.EmitAuditEvent(ctx, events.ResourceTokenDeleted, req.Kind, req.Name, req.Owner)
 	case storage.KindLogForwarder:
 		if err := r.Operator.DeleteLogForwarder(r.cluster.Key(), req.Name); err != nil {
 			if trace.IsNotFound(err) && req.Force {
@@ -440,6 +450,7 @@ func (r *Resources) Remove(ctx context.Context, req resources.RemoveRequest) err
 			return trace.Wrap(err)
 		}
 		r.Printf("Log forwarder %q has been deleted\n", req.Name)
+		r.EmitAuditEvent(ctx, events.ResourceLogForwarderDeleted, req.Kind, req.Name, req.Owner)
 	case storage.KindTLSKeyPair:
 		if err := r.Operator.DeleteClusterCertificate(r.cluster.Key()); err != nil {
 			if trace.IsNotFound(err) && req.Force {
@@ -448,6 +459,7 @@ func (r *Resources) Remove(ctx context.Context, req resources.RemoveRequest) err
 			return trace.Wrap(err)
 		}
 		r.Printf("TLS key pair %q has been deleted\n", req.Name)
+		r.EmitAuditEvent(ctx, events.ResourceTLSKeyPairDeleted, req.Kind, req.Name, req.Owner)
 	case storage.KindSMTPConfig:
 		if err := r.Operator.DeleteSMTPConfig(r.cluster.Key()); err != nil {
 			if trace.IsNotFound(err) && req.Force {
@@ -456,6 +468,7 @@ func (r *Resources) Remove(ctx context.Context, req resources.RemoveRequest) err
 			return trace.Wrap(err)
 		}
 		r.Println("SMTP configuration has been deleted")
+		r.EmitAuditEvent(ctx, events.ResourceSMTPConfigDeleted, req.Kind, req.Name, req.Owner)
 	case storage.KindAlert:
 		if err := r.Operator.DeleteAlert(r.cluster.Key(), req.Name); err != nil {
 			if trace.IsNotFound(err) && req.Force {
@@ -464,6 +477,7 @@ func (r *Resources) Remove(ctx context.Context, req resources.RemoveRequest) err
 			return trace.Wrap(err)
 		}
 		r.Printf("Alert %q has been deleted\n", req.Name)
+		r.EmitAuditEvent(ctx, events.ResourceAlertDeleted, req.Kind, req.Name, req.Owner)
 	case storage.KindAlertTarget:
 		if err := r.Operator.DeleteAlertTarget(r.cluster.Key()); err != nil {
 			if trace.IsNotFound(err) && req.Force {
@@ -472,6 +486,7 @@ func (r *Resources) Remove(ctx context.Context, req resources.RemoveRequest) err
 			return trace.Wrap(err)
 		}
 		r.Println("Alert target has been deleted")
+		r.EmitAuditEvent(ctx, events.ResourceAlertTargetDeleted, req.Kind, req.Name, req.Owner)
 	case storage.KindRuntimeEnvironment, storage.KindClusterConfiguration:
 		err := r.ClusterOperationHandler.RemoveResource(req)
 		return trace.Wrap(err)
@@ -481,12 +496,11 @@ func (r *Resources) Remove(ctx context.Context, req resources.RemoveRequest) err
 		return trace.BadParameter("unsupported resource %q, supported are: %v",
 			req.Kind, modules.GetResources().SupportedResourcesToRemove())
 	}
-	r.EmitAuditEvent(ctx, events.ResourceDeleted, req.Kind, req.Name, req.Owner)
 	return nil
 }
 
 // EmitAuditEvent emits the specified audit log event for the specified resource.
-func (r *Resources) EmitAuditEvent(ctx context.Context, event, kind, name, owner string) {
+func (r *Resources) EmitAuditEvent(ctx context.Context, event teleevents.Event, kind, name, owner string) {
 	fields := events.Fields{events.FieldKind: kind, events.FieldName: name}
 	if owner != "" {
 		fields[events.FieldOwner] = owner

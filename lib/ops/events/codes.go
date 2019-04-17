@@ -334,52 +334,133 @@ var (
 		Severity: events.SeverityInfo,
 		Message:  "Cluster {{.cluster}} has become healthy",
 	}
+	// ApplicationInstall is emitted when a new application image is installed.
+	ApplicationInstall = events.Event{
+		Name:     AppInstalled,
+		Code:     ApplicationInstallCode,
+		Severity: events.SeverityInfo,
+		Message:  "Application release {{.releaseName}} ({{.name}}:{{.version}}) has been installed",
+	}
+	// ApplicationUpgrade is emitted when an application release is upgraded.
+	ApplicationUpgrade = events.Event{
+		Name:     AppUpgraded,
+		Code:     ApplicationUpgradeCode,
+		Severity: events.SeverityInfo,
+		Message:  "Application release {{.releaseName}} has been upgraded to {{.name}}:{{.version}}",
+	}
+	// ApplicationRollback is emitted when an application release is rolled back.
+	ApplicationRollback = events.Event{
+		Name:     AppRolledBack,
+		Code:     ApplicationRollbackCode,
+		Severity: events.SeverityInfo,
+		Message:  "Application release {{.releaseName}} has been rolled back to {{.name}}:{{.version}}",
+	}
+	// ApplicationUninstall is emitted when an application release is uninstalled.
+	ApplicationUninstall = events.Event{
+		Name:     AppUninstalled,
+		Code:     ApplicationUninstallCode,
+		Severity: events.SeverityInfo,
+		Message:  "Applicaiton release {{.releaseName}} ({{.name}}:{{.version}}) has been uninstalled",
+	}
 )
 
 var (
-	OperationInstallStartCode          = "G0001I"
-	OperationInstallCompleteCode       = "G0002I"
-	OperationInstallFailureCode        = "G0002E"
-	OperationExpandStartCode           = "G0003I"
-	OperationExpandCompleteCode        = "G0004I"
-	OperationExpandFailureCode         = "G0004E"
-	OperationShrinkStartCode           = "G0005I"
-	OperationShrinkCompleteCode        = "G0006I"
-	OperationShrinkFailureCode         = "G0006E"
-	OperationUpdateStartCode           = "G0007I"
-	OperationUpdateCompleteCode        = "G0008I"
-	OperationUpdateFailureCode         = "G0008E"
-	OperationUninstallStartCode        = "G0009I"
-	OperationUninstallCompleteCode     = "G0010I"
-	OperationUninstallFailureCode      = "G0010E"
-	OperationGCStartCode               = "G0011I"
-	OperationGCCompleteCode            = "G0012I"
-	OperationGCFailureCode             = "G0012E"
-	OperationEnvStartCode              = "G0013I"
-	OperationEnvCompleteCode           = "G0014I"
-	OperationEnvFailureCode            = "G0014E"
-	OperationConfigStartCode           = "G0015I"
-	OperationConfigCompleteCode        = "G0016I"
-	OperationConfigFailureCode         = "G0016E"
-	ResourceUserCreatedCode            = "G1000I"
-	ResourceUserDeletedCode            = "G2000I"
-	ResourceTokenCreatedCode           = "G1001I"
-	ResourceTokenDeletedCode           = "G2001I"
+	// OpereationInstallStartCode is the install operation start event code.
+	OperationInstallStartCode = "G0001I"
+	// OperationInstallCompleteCode is the install operation complete event code.
+	OperationInstallCompleteCode = "G0002I"
+	// OperationInstallFailureCode is the install operation failure event code.
+	OperationInstallFailureCode = "G0002E"
+	// OperationExpandStartCode is the expand operation start event code.
+	OperationExpandStartCode = "G0003I"
+	// OperationExpandCompleteCode is the expand operation complete event code.
+	OperationExpandCompleteCode = "G0004I"
+	// OperationExpandFailureCode is the expand operation failure event code.
+	OperationExpandFailureCode = "G0004E"
+	// OperationShrinkStartCide is the shrink operation start event code.
+	OperationShrinkStartCode = "G0005I"
+	// OperationShrinkCompleteCode is the shrink operation complete event code.
+	OperationShrinkCompleteCode = "G0006I"
+	// OperationShrinkFailureCode is the shrink operation failure event code.
+	OperationShrinkFailureCode = "G0006E"
+	// OperationUpdateStartCode is the update operation start event code.
+	OperationUpdateStartCode = "G0007I"
+	// OperationUpdateCompeteCode is the update operation complete event code.
+	OperationUpdateCompleteCode = "G0008I"
+	// OperationUpdateFailureCode is the update operation failure event code.
+	OperationUpdateFailureCode = "G0008E"
+	// OperationUninstallStartCode is the uninstall operation start event code.
+	OperationUninstallStartCode = "G0009I"
+	// OperationUninstallCompleteCode is the uninstall operation complete event code.
+	OperationUninstallCompleteCode = "G0010I"
+	// OperationUninstallFailureCode is the uninstall operation failure event code.
+	OperationUninstallFailureCode = "G0010E"
+	// OperationGCStartCode is the garbage collect operation start event code.
+	OperationGCStartCode = "G0011I"
+	// OperationGCCompleteCode is the garbage collect operation complete event code.
+	OperationGCCompleteCode = "G0012I"
+	// OperationGCFailureCode is the garbage collect operation failure event code.
+	OperationGCFailureCode = "G0012E"
+	// OperationEnvStartCode is the runtime environment update operation start event code.
+	OperationEnvStartCode = "G0013I"
+	// OperationEnvCompleteCode is the runtime environment update operation complete event code.
+	OperationEnvCompleteCode = "G0014I"
+	// OperationEnvFailureCode is the runtime environment update operation failure event code.
+	OperationEnvFailureCode = "G0014E"
+	// OperationConfigStartCode is the cluster configuration update operation start event code.
+	OperationConfigStartCode = "G0015I"
+	// OperationConfigCompleteCode is the cluster configuration update operation complete event code.
+	OperationConfigCompleteCode = "G0016I"
+	// OperationConfigFailureCode is the cluster configuration update operation failure event code.
+	OperationConfigFailureCode = "G0016E"
+	// ResourceUserCreatedCode is the user resource created event code.
+	ResourceUserCreatedCode = "G1000I"
+	// ResourceUserDeletedCode is the user resource deleted event code.
+	ResourceUserDeletedCode = "G2000I"
+	// ResourceTokenCreatedCode is the user token resource created event code.
+	ResourceTokenCreatedCode = "G1001I"
+	// ResourceTokenDeletedCode is the user token resource deleted event code.
+	ResourceTokenDeletedCode = "G2001I"
+	// ResourceGithubConnectorCreatedCode is the Github connector resource created event code.
 	ResourceGithubConnectorCreatedCode = "G1002I"
+	// ResourceGithubConnectorDeletedCode is the Github connector resource deleted event code.
 	ResourceGithubConnectorDeletedCode = "G2002I"
-	ResourceLogForwarderCreatedCode    = "G1003I"
-	ResourceLogForwarderDeletedCode    = "G2003I"
-	ResourceTLSKeyPairCreatedCode      = "G1004I"
-	ResourceTLSKeyPairDeletedCode      = "G2004I"
-	ResourceAuthPreferenceCreatedCode  = "G1005I"
-	ResourceSMTPConfigCreatedCode      = "G1006I"
-	ResourceSMTPConfigDeletedCode      = "G2006I"
-	ResourceAlertCreatedCode           = "G1007I"
-	ResourceAlertDeletedCode           = "G2007I"
-	ResourceAlertTargetCreatedCode     = "G1008I"
-	ResourceAlertTargetDeletedCode     = "G2008I"
-	ResourceAuthGatewayCreatedCode     = "G1009I"
-	UserInviteCreatedCode              = "G1010I"
-	ClusterUnhealthyCode               = "G3000W"
-	ClusterHealthyCode                 = "G3001I"
+	// ResourceLogForwarderCreatedCode is the log forwarder resource created event code.
+	ResourceLogForwarderCreatedCode = "G1003I"
+	// ResourceLogForwarderDeletedCode is the log forwarder resource deleted event code.
+	ResourceLogForwarderDeletedCode = "G2003I"
+	// ResourceTLSKeyPairCreatedCode is the TLS key pair resource created event code.
+	ResourceTLSKeyPairCreatedCode = "G1004I"
+	// ResourceTLSKeyPairDeletedCode is the TLS key pair resource deleted event code.
+	ResourceTLSKeyPairDeletedCode = "G2004I"
+	// ResourceAuthPreferenceCreatedCode is the cluster auth preference resource updated event code.
+	ResourceAuthPreferenceCreatedCode = "G1005I"
+	// ResourceSMTPConfigCreatedCode is the SMTP configuration resource updated event code.
+	ResourceSMTPConfigCreatedCode = "G1006I"
+	// ResourceSMTPConfigDeletedCode is the SMTP configuration resource deleted event code.
+	ResourceSMTPConfigDeletedCode = "G2006I"
+	// ResourceAlertCreatedCode is the monitoring alert resource created event code.
+	ResourceAlertCreatedCode = "G1007I"
+	// ResourceAlertDeletedCode is the monitoring alert resource deleted event code.
+	ResourceAlertDeletedCode = "G2007I"
+	// ResourceAlertTargetCreatedCode is the monitoring alert target resource created event code.
+	ResourceAlertTargetCreatedCode = "G1008I"
+	// ResourceAlertTargetDeletedCode is the monitoring alert target resource deleted event code.
+	ResourceAlertTargetDeletedCode = "G2008I"
+	// ResourceAuthGatewayCreatedCode is the auth gateway resource updated event code.
+	ResourceAuthGatewayCreatedCode = "G1009I"
+	// UserInviteCreatedCode is the user invite created event code.
+	UserInviteCreatedCode = "G1010I"
+	// ClusterUnhealthyCode is the cluster goes unhealthy event code.
+	ClusterUnhealthyCode = "G3000W"
+	// ClusterHealthyCode is the cluster goes healthy event code.
+	ClusterHealthyCode = "G3001I"
+	// ApplicationInstallCode is the application release install event code.
+	ApplicationInstallCode = "G4000I"
+	// ApplicationUpgradeCode is the application release upgrade event code.
+	ApplicationUpgradeCode = "G4001I"
+	// ApplicationRollbackCode is the application release rollback event code.
+	ApplicationRollbackCode = "G4002I"
+	// ApplicationUninstallCode is the application release uninstall event code.
+	ApplicationUninstallCode = "G4003I"
 )

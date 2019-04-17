@@ -422,7 +422,7 @@ func (h *WebHandler) inviteUser(w http.ResponseWriter, r *http.Request, p httpro
 		return trace.Wrap(err)
 	}
 
-	events.Emit(r.Context(), ctx.Operator, events.InviteCreated, events.Fields{
+	events.Emit(r.Context(), ctx.Operator, events.UserInviteCreated, events.Fields{
 		events.FieldName:  req.Name,
 		events.FieldRoles: req.Roles,
 	})
@@ -2234,7 +2234,7 @@ func (h *WebHandler) emitAuditEvent(w http.ResponseWriter, r *http.Request, p ht
 	if err != nil {
 		return trace.Wrap(err)
 	}
-	events.Emit(r.Context(), ctx.Operator, req.Type, events.Fields(req.Fields))
+	events.Emit(r.Context(), ctx.Operator, req.Event, events.Fields(req.Fields))
 	roundtrip.ReplyJSON(w, http.StatusOK, message("audit log event saved"))
 	return nil
 }

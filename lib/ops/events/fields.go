@@ -41,6 +41,10 @@ func (f Fields) WithField(field string, value interface{}) Fields {
 	return Fields(copy)
 }
 
+// EventForOperation returns an appropriate event for the provided operation.
+func EventForOperation(operation ops.SiteOperation) (events.Event, error) {
+}
+
 // FieldsForOperation returns event fields for the provided operation.
 func FieldsForOperation(operation ops.SiteOperation) Fields {
 	fields, err := fieldsForOperation(operation)

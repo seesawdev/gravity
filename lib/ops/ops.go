@@ -1872,9 +1872,9 @@ type Identity interface {
 type AuditEventRequest struct {
 	// SiteKey is the ID of the cluster the request is for.
 	SiteKey
-	// Type is the audit event type.
-	Type string `json:"type"`
-	// Fields is the audit event fields.
+	// Event is the audit event to emit.
+	Event events.Event `json:"event"`
+	// Fields is the audit event additional fields.
 	Fields events.EventFields `json:"fields"`
 }
 
@@ -1883,15 +1883,15 @@ func (r *AuditEventRequest) Check() error {
 	if err := r.SiteKey.Check(); err != nil {
 		return trace.Wrap(err)
 	}
-	if r.Type == "" {
-		return trace.BadParameter("missing audit log event type")
+	if r.Event.Name == "" {
+		return trace.BadParameter("missing audit log event name")
 	}
 	return nil
 }
 
 // String returns the event's string representation.
 func (r AuditEventRequest) String() string {
-	return fmt.Sprintf("AuditEvent(Type=%v, Fields=%v)", r.Type, r.Fields)
+	return fmt.Sprintf("AuditEvent(Event=%v, Fields=%v)", r.Event, r.Fields)
 }
 
 // Audit provides interface for emitting audit log events.

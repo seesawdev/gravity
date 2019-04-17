@@ -31,7 +31,7 @@ var log = logrus.WithField(trace.Component, "events")
 
 // Emit saves the provided event to the audit log of the local cluster of the
 // provided operator.
-func Emit(ctx context.Context, operator ops.Operator, event string, fields Fields) {
+func Emit(ctx context.Context, operator ops.Operator, event events.Event, fields Fields) {
 	err := emit(ctx, operator, event, fields)
 	if err != nil {
 		log.Errorf("Failed to emit audit event %v %v: %v.",
@@ -39,7 +39,7 @@ func Emit(ctx context.Context, operator ops.Operator, event string, fields Field
 	}
 }
 
-func emit(ctx context.Context, operator ops.Operator, event string, fields Fields) error {
+func emit(ctx context.Context, operator ops.Operator, event events.Event, fields Fields) error {
 	cluster, err := operator.GetLocalSite()
 	if err != nil {
 		return trace.Wrap(err)
@@ -49,7 +49,7 @@ func emit(ctx context.Context, operator ops.Operator, event string, fields Field
 	}
 	return operator.EmitAuditEvent(ctx, ops.AuditEventRequest{
 		SiteKey: cluster.Key(),
-		Type:    event,
+		Event:   event,
 		Fields:  events.EventFields(fields),
 	})
 }

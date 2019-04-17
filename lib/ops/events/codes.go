@@ -320,17 +320,17 @@ var (
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} invited user {{.name}} with roles {{.roles}}",
 	}
-	// ClusterDegraded is emitted when cluster becomes unhealthy.
-	ClusterDegraded = events.Event{
+	// ClusterUnhealthy is emitted when cluster becomes unhealthy.
+	ClusterUnhealthy = events.Event{
 		Name:     ClusterDegraded,
-		Code:     ClusterDegradedCode,
+		Code:     ClusterUnhealthyCode,
 		Severity: events.SeverityWarning,
 		Message:  "Cluster {{.cluster}} is degraded: {{.reason}}",
 	}
-	// ClusterActivated is emitted when cluster becomes healthy.
-	ClusterActivated = events.Event{
+	// ClusterHealthy is emitted when cluster becomes healthy.
+	ClusterHealthy = events.Event{
 		Name:     ClusterActivated,
-		Code:     ClusterActivatedCode,
+		Code:     ClusterHealthyCode,
 		Severity: events.SeverityInfo,
 		Message:  "Cluster {{.cluster}} has become healthy",
 	}
@@ -380,6 +380,6 @@ var (
 	ResourceAlertTargetDeletedCode     = "G2008I"
 	ResourceAuthGatewayCreatedCode     = "G1009I"
 	UserInviteCreatedCode              = "G1010I"
-	ClusterDegradedCode                = "G3000W"
-	ClusterActivatedCode               = "G3001I"
+	ClusterUnhealthyCode               = "G3000W"
+	ClusterHealthyCode                 = "G3001I"
 )

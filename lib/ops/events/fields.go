@@ -41,6 +41,11 @@ func (f Fields) WithField(field string, value interface{}) Fields {
 	return Fields(copy)
 }
 
+// GetString returns the specified event field as a string.
+func (f Fields) GetString(key string) string {
+	return events.EventFields(f).GetString(key)
+}
+
 // EventForOperation returns an appropriate event for the provided operation.
 func EventForOperation(operation ops.SiteOperation) (events.Event, error) {
 	switch operation.Type {

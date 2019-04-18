@@ -44,7 +44,7 @@ func emit(ctx context.Context, operator ops.Operator, event events.Event, fields
 	if err != nil {
 		return trace.Wrap(err)
 	}
-	if fields[FieldUser] == "" && storage.UserFromContext(ctx) != "" {
+	if fields.GetString(FieldUser) == "" && storage.UserFromContext(ctx) != "" {
 		fields[FieldUser] = storage.UserFromContext(ctx)
 	}
 	return operator.EmitAuditEvent(ctx, ops.AuditEventRequest{

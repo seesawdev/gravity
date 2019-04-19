@@ -51,60 +51,60 @@ func EventForOperation(operation ops.SiteOperation) (events.Event, error) {
 	switch operation.Type {
 	case ops.OperationInstall:
 		if operation.IsCompleted() {
-			return OperationInstallStart, nil
+			return OperationInstallComplete, nil
 		} else if operation.IsFailed() {
 			return OperationInstallFailure, nil
 		}
-		return OperationInstallComplete, nil
+		return OperationInstallStart, nil
 	case ops.OperationExpand:
 		if operation.IsCompleted() {
-			return OperationExpandStart, nil
+			return OperationExpandComplete, nil
 		} else if operation.IsFailed() {
 			return OperationExpandFailure, nil
 		}
-		return OperationExpandComplete, nil
+		return OperationExpandStart, nil
 	case ops.OperationShrink:
 		if operation.IsCompleted() {
-			return OperationShrinkStart, nil
+			return OperationShrinkComplete, nil
 		} else if operation.IsFailed() {
 			return OperationShrinkFailure, nil
 		}
-		return OperationShrinkComplete, nil
+		return OperationShrinkStart, nil
 	case ops.OperationUpdate:
 		if operation.IsCompleted() {
-			return OperationUpdateStart, nil
+			return OperationUpdateComplete, nil
 		} else if operation.IsFailed() {
 			return OperationUpdateFailure, nil
 		}
-		return OperationUpdateComplete, nil
+		return OperationUpdateStart, nil
 	case ops.OperationUninstall:
 		if operation.IsCompleted() {
-			return OperationUninstallStart, nil
+			return OperationUninstallComplete, nil
 		} else if operation.IsFailed() {
 			return OperationUninstallFailure, nil
 		}
-		return OperationUninstallComplete, nil
+		return OperationUninstallStart, nil
 	case ops.OperationGarbageCollect:
 		if operation.IsCompleted() {
-			return OperationGCStart, nil
+			return OperationGCComplete, nil
 		} else if operation.IsFailed() {
 			return OperationGCFailure, nil
 		}
-		return OperationGCComplete, nil
+		return OperationGCStart, nil
 	case ops.OperationUpdateRuntimeEnviron:
 		if operation.IsCompleted() {
-			return OperationEnvStart, nil
+			return OperationEnvComplete, nil
 		} else if operation.IsFailed() {
 			return OperationEnvFailure, nil
 		}
-		return OperationEnvComplete, nil
+		return OperationEnvStart, nil
 	case ops.OperationUpdateConfig:
 		if operation.IsCompleted() {
-			return OperationConfigStart, nil
+			return OperationConfigComplete, nil
 		} else if operation.IsFailed() {
 			return OperationConfigFailure, nil
 		}
-		return OperationConfigComplete, nil
+		return OperationConfigStart, nil
 	}
 	return events.Event{}, trace.NotFound(
 		"operation does not have corresponding event: %v", operation)

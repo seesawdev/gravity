@@ -595,7 +595,7 @@ func (m *Handler) deleteUser(w http.ResponseWriter, r *http.Request, p httproute
 	if err != nil {
 		return nil, trace.Wrap(err)
 	}
-	err = ctx.Operator.DeleteUser(*clusterKey, p.ByName("username"))
+	err = ctx.Operator.DeleteUser(r.Context(), *clusterKey, p.ByName("username"))
 	if err != nil {
 		return nil, trace.Wrap(err)
 	}

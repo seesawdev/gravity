@@ -21,168 +21,168 @@ import "github.com/gravitational/teleport/lib/events"
 var (
 	// OperationInstallStart is emitted when a cluster installation starts.
 	OperationInstallStart = events.Event{
-		Name:     OperationStarted,
+		Name:     OperationStartedEvent,
 		Code:     OperationInstallStartCode,
 		Severity: events.SeverityInfo,
 		Message:  "Cluster {{.cluster}} is being installed",
 	}
 	// OperationInstallComplete is emitted when a cluster installation successfully completes.
 	OperationInstallComplete = events.Event{
-		Name:     OperationCompleted,
+		Name:     OperationCompletedEvent,
 		Code:     OperationInstallCompleteCode,
 		Severity: events.SeverityInfo,
 		Message:  "Cluster {{.cluster}} has been installed",
 	}
 	// OperationInstallFailure is emitted when a cluster installation fails.
 	OperationInstallFailure = events.Event{
-		Name:     OperationFailed,
+		Name:     OperationFailedEvent,
 		Code:     OperationInstallFailureCode,
 		Severity: events.SeverityError,
 		Message:  "Cluster {{.cluster}} install has failed",
 	}
 	// OperationExpandStart is emitted when a new node starts joining the cluster.
 	OperationExpandStart = events.Event{
-		Name:     OperationStarted,
+		Name:     OperationStartedEvent,
 		Code:     OperationExpandStartCode,
 		Severity: events.SeverityInfo,
 		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} is joining the cluster",
 	}
 	// OperationExpandComplete is emitted when a node has successfully joined the cluster.
 	OperationExpandComplete = events.Event{
-		Name:     OperationCompleted,
+		Name:     OperationCompletedEvent,
 		Code:     OperationExpandCompleteCode,
 		Severity: events.SeverityInfo,
 		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} has joined the cluster",
 	}
 	// OperationExpandFailure is emitted when a node fails to join the cluster.
 	OperationExpandFailure = events.Event{
-		Name:     OperationFailed,
+		Name:     OperationFailedEvent,
 		Code:     OperationExpandFailureCode,
 		Severity: events.SeverityError,
 		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} has failed to join the cluster",
 	}
 	// OperationShrinkStart is emitted when a node is leaving the cluster.
 	OperationShrinkStart = events.Event{
-		Name:     OperationStarted,
+		Name:     OperationStartedEvent,
 		Code:     OperationShrinkStartCode,
 		Severity: events.SeverityInfo,
 		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} is leaving the cluster",
 	}
 	// OperationShrinkComplete is emitted when a node has left the cluster.
 	OperationShrinkComplete = events.Event{
-		Name:     OperationCompleted,
+		Name:     OperationCompletedEvent,
 		Code:     OperationShrinkCompleteCode,
 		Severity: events.SeverityInfo,
 		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} has left the cluster",
 	}
 	// OperationShrinkFailure is emitted when a node fails to leave the cluster.
 	OperationShrinkFailure = events.Event{
-		Name:     OperationFailed,
+		Name:     OperationFailedEvent,
 		Code:     OperationShrinkFailureCode,
 		Severity: events.SeverityError,
 		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} has failed to leave the cluster",
 	}
 	// OperationUpdateStart is emitted when cluster upgrade is started.
 	OperationUpdateStart = events.Event{
-		Name:     OperationStarted,
+		Name:     OperationStartedEvent,
 		Code:     OperationUpdateStartCode,
 		Severity: events.SeverityInfo,
 		Message:  "Cluster is upgrading to version {{.version}}",
 	}
 	// OperationUpdateCompete is emitted when cluster upgrade successfully finishes.
 	OperationUpdateComplete = events.Event{
-		Name:     OperationCompleted,
+		Name:     OperationCompletedEvent,
 		Code:     OperationUpdateCompleteCode,
 		Severity: events.SeverityInfo,
 		Message:  "Cluster has been upgraded to version {{.version}}",
 	}
 	// OperationUpdateFailure is emitted when cluster upgrade fails.
 	OperationUpdateFailure = events.Event{
-		Name:     OperationFailed,
+		Name:     OperationFailedEvent,
 		Code:     OperationUpdateFailureCode,
 		Severity: events.SeverityError,
 		Message:  "Cluster upgrade to version {{.version}} has failed",
 	}
 	// OperationUninstallStart is emitted when cluster uninstall is launched.
 	OperationUninstallStart = events.Event{
-		Name:     OperationStarted,
+		Name:     OperationStartedEvent,
 		Code:     OperationUninstallStartCode,
 		Severity: events.SeverityInfo,
 		Message:  "Cluster is being uninstalled",
 	}
 	// OperationUninstallComplete is emitted when cluster has been uninstalled.
 	OperationUninstallComplete = events.Event{
-		Name:     OperationCompleted,
+		Name:     OperationCompletedEvent,
 		Code:     OperationUninstallCompleteCode,
 		Severity: events.SeverityInfo,
 		Message:  "Cluster has been uninstalled",
 	}
 	// OperationUninstallFailure is emitted when cluster uninstall fails.
 	OperationUninstallFailure = events.Event{
-		Name:     OperationFailed,
+		Name:     OperationFailedEvent,
 		Code:     OperationUninstallFailureCode,
 		Severity: events.SeverityError,
 		Message:  "Cluster uninstall has failed",
 	}
 	// OperationGCStart is emitted when garbage collection is started on a cluster.
 	OperationGCStart = events.Event{
-		Name:     OperationStarted,
+		Name:     OperationStartedEvent,
 		Code:     OperationGCStartCode,
 		Severity: events.SeverityInfo,
 		Message:  "Running garbage collection on the cluster",
 	}
 	// OperationGCComplete is emitted when cluster garbage collection successfully completes.
 	OperationGCComplete = events.Event{
-		Name:     OperationCompleted,
+		Name:     OperationCompletedEvent,
 		Code:     OperationGCCompleteCode,
 		Severity: events.SeverityInfo,
 		Message:  "Garbage collection on the cluster has finished",
 	}
 	// OperationGCFailure is emitted when cluster garbage collection fails.
 	OperationGCFailure = events.Event{
-		Name:     OperationFailed,
+		Name:     OperationFailedEvent,
 		Code:     OperationGCFailureCode,
 		Severity: events.SeverityError,
 		Message:  "Garbage collection on the cluster has failed",
 	}
 	// OperationEnvStart is emitted when cluster runtime environment update is launched.
 	OperationEnvStart = events.Event{
-		Name:     OperationStarted,
+		Name:     OperationStartedEvent,
 		Code:     OperationEnvStartCode,
 		Severity: events.SeverityInfo,
 		Message:  "Updating the cluster runtime environment",
 	}
 	// OperationEnvComplete is emitted when cluster runtime environment update successfully completes.
 	OperationEnvComplete = events.Event{
-		Name:     OperationCompleted,
+		Name:     OperationCompletedEvent,
 		Code:     OperationEnvCompleteCode,
 		Severity: events.SeverityInfo,
 		Message:  "Cluster runtime environment has been updated",
 	}
 	// OperationEnvFailure is emitted when cluster runtime environment update fails.
 	OperationEnvFailure = events.Event{
-		Name:     OperationFailed,
+		Name:     OperationFailedEvent,
 		Code:     OperationEnvFailureCode,
 		Severity: events.SeverityError,
 		Message:  "Failed to update the cluster runtime environment",
 	}
 	// OperationConfigStart is emitted when cluster configuration update launches.
 	OperationConfigStart = events.Event{
-		Name:     OperationStarted,
+		Name:     OperationStartedEvent,
 		Code:     OperationConfigStartCode,
 		Severity: events.SeverityInfo,
 		Message:  "Updating the cluster configuration",
 	}
 	// OperationConfigComplete is emitted when cluster configuration update successfully completes.
 	OperationConfigComplete = events.Event{
-		Name:     OperationCompleted,
+		Name:     OperationCompletedEvent,
 		Code:     OperationConfigCompleteCode,
 		Severity: events.SeverityInfo,
 		Message:  "Cluster configuration has been updated",
 	}
 	// OperationConfigFailure is emitted when cluster configuration update fails.
 	OperationConfigFailure = events.Event{
-		Name:     OperationFailed,
+		Name:     OperationFailedEvent,
 		Code:     OperationConfigFailureCode,
 		Severity: events.SeverityError,
 		Message:  "Failed to update the cluster configuration",
@@ -315,49 +315,49 @@ var (
 	}
 	// UserInviteCreated is emitted when a user invite is created.
 	UserInviteCreated = events.Event{
-		Name:     InviteCreated,
+		Name:     InviteCreatedEvent,
 		Code:     UserInviteCreatedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} invited user {{.name}} with roles {{.roles}}",
 	}
 	// ClusterUnhealthy is emitted when cluster becomes unhealthy.
 	ClusterUnhealthy = events.Event{
-		Name:     ClusterDegraded,
+		Name:     ClusterDegradedEvent,
 		Code:     ClusterUnhealthyCode,
 		Severity: events.SeverityWarning,
 		Message:  "Cluster is degraded: {{.reason}}",
 	}
 	// ClusterHealthy is emitted when cluster becomes healthy.
 	ClusterHealthy = events.Event{
-		Name:     ClusterActivated,
+		Name:     ClusterActivatedEvent,
 		Code:     ClusterHealthyCode,
 		Severity: events.SeverityInfo,
 		Message:  "Cluster has become healthy",
 	}
 	// ApplicationInstall is emitted when a new application image is installed.
 	ApplicationInstall = events.Event{
-		Name:     AppInstalled,
+		Name:     AppInstalledEvent,
 		Code:     ApplicationInstallCode,
 		Severity: events.SeverityInfo,
 		Message:  "Application release {{.releaseName}} ({{.name}}:{{.version}}) has been installed",
 	}
 	// ApplicationUpgrade is emitted when an application release is upgraded.
 	ApplicationUpgrade = events.Event{
-		Name:     AppUpgraded,
+		Name:     AppUpgradedEvent,
 		Code:     ApplicationUpgradeCode,
 		Severity: events.SeverityInfo,
 		Message:  "Application release {{.releaseName}} has been upgraded to {{.name}}:{{.version}}",
 	}
 	// ApplicationRollback is emitted when an application release is rolled back.
 	ApplicationRollback = events.Event{
-		Name:     AppRolledBack,
+		Name:     AppRolledBackEvent,
 		Code:     ApplicationRollbackCode,
 		Severity: events.SeverityInfo,
 		Message:  "Application release {{.releaseName}} has been rolled back to {{.name}}:{{.version}}",
 	}
 	// ApplicationUninstall is emitted when an application release is uninstalled.
 	ApplicationUninstall = events.Event{
-		Name:     AppUninstalled,
+		Name:     AppUninstalledEvent,
 		Code:     ApplicationUninstallCode,
 		Severity: events.SeverityInfo,
 		Message:  "Applicaiton release {{.releaseName}} ({{.name}}:{{.version}}) has been uninstalled",
@@ -466,21 +466,21 @@ const (
 )
 
 const (
-	// OperationStarted fires when an operation starts.
-	OperationStarted = "operation.started"
-	// OperationCompleted fires when an operation completes successfully.
-	OperationCompleted = "operation.completed"
-	// OperationFailed fires when an operation completes with error.
-	OperationFailed = "operation.failed"
+	// OperationStartedEvent fires when an operation starts.
+	OperationStartedEvent = "operation.started"
+	// OperationCompletedEvent fires when an operation completes successfully.
+	OperationCompletedEvent = "operation.completed"
+	// OperationFailedEvent fires when an operation completes with error.
+	OperationFailedEvent = "operation.failed"
 
-	// AppInstalled fires when an application image is installed.
-	AppInstalled = "application.installed"
-	// AppUpgraded fires when an application release is upgraded.
-	AppUpgraded = "application.upgraded"
-	// AppRolledBack fires when an application release is rolled back.
-	AppRolledBack = "application.rolledback"
-	// AppUninstalled fires when an application release is uninstalled.
-	AppUninstalled = "application.uninstalled"
+	// AppInstalledEvent fires when an application image is installed.
+	AppInstalledEvent = "application.installed"
+	// AppUpgradedEvent fires when an application release is upgraded.
+	AppUpgradedEvent = "application.upgraded"
+	// AppRolledBackEvent fires when an application release is rolled back.
+	AppRolledBackEvent = "application.rolledback"
+	// AppUninstalledEvent fires when an application release is uninstalled.
+	AppUninstalledEvent = "application.uninstalled"
 
 	// UserCreatedEvent fires when a user is created/updated.
 	UserCreatedEvent = "user.created"
@@ -518,11 +518,11 @@ const (
 	AlertTargetDeletedEvent = "alerttarget.deleted"
 	// AuthGatewayUpdatedEvent fires when auth gateway settings are updated.
 	AuthGatewayUpdatedEvent = "authgateway.updated"
-	// InviteCreated fires when a new user invitation is generated.
-	InviteCreated = "invite.created"
+	// InviteCreatedEvent fires when a new user invitation is generated.
+	InviteCreatedEvent = "invite.created"
 
-	// ClusterDegraded fires when cluster health check fails.
-	ClusterDegraded = "cluster.degraded"
-	// ClusterActivated fires when cluster becomes healthy again.
-	ClusterActivated = "cluster.activated"
+	// ClusterDegradedEvent fires when cluster health check fails.
+	ClusterDegradedEvent = "cluster.degraded"
+	// ClusterActivatedEvent fires when cluster becomes healthy again.
+	ClusterActivatedEvent = "cluster.activated"
 )

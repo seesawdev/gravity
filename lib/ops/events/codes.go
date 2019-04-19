@@ -297,14 +297,14 @@ var (
 		Name:     ResourceCreated,
 		Code:     ResourceAlertTargetCreatedCode,
 		Severity: events.SeverityInfo,
-		Message:  "User {{.user}} created monitoring alert target {{.name}}",
+		Message:  "User {{.user}} updated monitoring alert target",
 	}
 	// ResourceAlertTargetDeleted is emitted when monitoring alert target is deleted.
 	ResourceAlertTargetDeleted = events.Event{
 		Name:     ResourceDeleted,
 		Code:     ResourceAlertTargetDeletedCode,
 		Severity: events.SeverityInfo,
-		Message:  "User {{.user}} deleted monitoring alert target {{.name}}",
+		Message:  "User {{.user}} deleted monitoring alert target",
 	}
 	// ResourceAuthGatewayCreated is emitted when cluster auth gateway settings are updated.
 	ResourceAuthGatewayCreated = events.Event{

@@ -17,6 +17,7 @@ limitations under the License.
 package cli
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"text/tabwriter"
@@ -68,7 +69,7 @@ func createAPIKey(localEnv *localenv.LocalEnvironment, opsCenterURL, username st
 		return trace.Wrap(err)
 	}
 
-	key, err := operator.CreateAPIKey(ops.NewAPIKeyRequest{
+	key, err := operator.CreateAPIKey(context.Background(), ops.NewAPIKeyRequest{
 		UserEmail: username,
 	})
 	if err != nil {
@@ -107,7 +108,7 @@ func deleteAPIKey(localEnv *localenv.LocalEnvironment, opsCenterURL, username, t
 		return trace.Wrap(err)
 	}
 
-	if err := operator.DeleteAPIKey(username, token); err != nil {
+	if err := operator.DeleteAPIKey(context.Background(), username, token); err != nil {
 		return trace.Wrap(err)
 	}
 

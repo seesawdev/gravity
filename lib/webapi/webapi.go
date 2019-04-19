@@ -1474,7 +1474,7 @@ func (m *Handler) updateCertificate(w http.ResponseWriter, r *http.Request, p ht
 		return nil, trace.Wrap(err)
 	}
 
-	cert, err := context.Operator.UpdateClusterCertificate(ops.UpdateCertificateRequest{
+	cert, err := context.Operator.UpdateClusterCertificate(r.Context(), ops.UpdateCertificateRequest{
 		AccountID:    context.User.GetAccountID(),
 		SiteDomain:   p[0].Value,
 		Certificate:  certificate,

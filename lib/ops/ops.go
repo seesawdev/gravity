@@ -245,13 +245,13 @@ type ClusterAgentRequest struct {
 // APIKeys represents a collection of user API keys
 type APIKeys interface {
 	// CreateAPIKey creates a new API key for a user
-	CreateAPIKey(NewAPIKeyRequest) (*storage.APIKey, error)
+	CreateAPIKey(context.Context, NewAPIKeyRequest) (*storage.APIKey, error)
 
 	// GetAPIKeys returns API keys for the specified user
 	GetAPIKeys(userEmail string) ([]storage.APIKey, error)
 
 	// DeleteAPIKey deletes an API key
-	DeleteAPIKey(userEmail, token string) error
+	DeleteAPIKey(ctx context.Context, userEmail, token string) error
 }
 
 // Tokens represents a token management layer
@@ -476,9 +476,9 @@ type Certificates interface {
 	GetClusterCertificate(key SiteKey, withSecrets bool) (*ClusterCertificate, error)
 	// UpdateClusterCertificate updates the cluster TLS certificate that is
 	// presented by the cluster's local web endpoint
-	UpdateClusterCertificate(UpdateCertificateRequest) (*ClusterCertificate, error)
+	UpdateClusterCertificate(context.Context, UpdateCertificateRequest) (*ClusterCertificate, error)
 	// DeleteClusterCertificate deletes the cluster TLS certificate
-	DeleteClusterCertificate(SiteKey) error
+	DeleteClusterCertificate(context.Context, SiteKey) error
 }
 
 // RuntimeEnvironment manages runtime environment variables in cluster
@@ -1714,11 +1714,11 @@ type LogForwarders interface {
 	// GetLogForwarders retrieves the list of active log forwarders
 	GetLogForwarders(key SiteKey) ([]storage.LogForwarder, error)
 	// CreateLogForwarder creates a new log forwarder
-	CreateLogForwarder(key SiteKey, forwarder storage.LogForwarder) error
+	CreateLogForwarder(ctx context.Context, key SiteKey, forwarder storage.LogForwarder) error
 	// UpsertLogForwarder updates an existing log forwarder
-	UpdateLogForwarder(key SiteKey, forwarder storage.LogForwarder) error
+	UpdateLogForwarder(ctx context.Context, key SiteKey, forwarder storage.LogForwarder) error
 	// DeleteLogForwarder deletes a log forwarder
-	DeleteLogForwarder(key SiteKey, name string) error
+	DeleteLogForwarder(ctx context.Context, key SiteKey, name string) error
 }
 
 // SMTP defines the interface to manage cluster SMTP configuration
@@ -1726,9 +1726,9 @@ type SMTP interface {
 	// GetSMTPConfig returns the cluster SMTP configuration
 	GetSMTPConfig(SiteKey) (storage.SMTPConfig, error)
 	// UpdateSMTPConfig updates the cluster SMTP configuration
-	UpdateSMTPConfig(SiteKey, storage.SMTPConfig) error
+	UpdateSMTPConfig(context.Context, SiteKey, storage.SMTPConfig) error
 	// DeleteSMTPConfig deletes the cluster STMP configuration
-	DeleteSMTPConfig(SiteKey) error
+	DeleteSMTPConfig(context.Context, SiteKey) error
 }
 
 // Monitoring defines the interface to manage monitoring and metrics
@@ -1740,15 +1740,15 @@ type Monitoring interface {
 	// GetAlerts returns the list of configured monitoring alerts
 	GetAlerts(SiteKey) ([]storage.Alert, error)
 	// UpdateAlert updates the specified monitoring alert
-	UpdateAlert(SiteKey, storage.Alert) error
+	UpdateAlert(context.Context, SiteKey, storage.Alert) error
 	// DeleteAlert deletes the monitoring alert specified with name
-	DeleteAlert(key SiteKey, name string) error
+	DeleteAlert(ctx context.Context, key SiteKey, name string) error
 	// GetAlertTargets returns the list of configured monitoring alert targets
 	GetAlertTargets(SiteKey) ([]storage.AlertTarget, error)
 	// UpdateAlertTarget updates cluster's alert target to the specified
-	UpdateAlertTarget(SiteKey, storage.AlertTarget) error
+	UpdateAlertTarget(context.Context, SiteKey, storage.AlertTarget) error
 	// DeleteAlertTarget deletes the monitoring alert target
-	DeleteAlertTarget(SiteKey) error
+	DeleteAlertTarget(context.Context, SiteKey) error
 }
 
 // UpdateRetentionPolicyRequest is a request to update retention policy
@@ -1843,27 +1843,27 @@ func FindServerByInstanceID(cluster *Site, instanceID string) (*storage.Server, 
 // Identity provides methods for managing users, roles and authentication settings
 type Identity interface {
 	// UpsertUser creates or updates a user
-	UpsertUser(key SiteKey, user teleservices.User) error
+	UpsertUser(ctx context.Context, key SiteKey, user teleservices.User) error
 	// GetUser returns a user by name
 	GetUser(key SiteKey, name string) (teleservices.User, error)
 	// GetUsers returns all users
 	GetUsers(key SiteKey) ([]teleservices.User, error)
 	// DeleteUser deletes a user by name
-	DeleteUser(key SiteKey, name string) error
+	DeleteUser(ctx context.Context, key SiteKey, name string) error
 	// UpsertClusterAuthPreference updates cluster authentication preference
-	UpsertClusterAuthPreference(key SiteKey, auth teleservices.AuthPreference) error
+	UpsertClusterAuthPreference(ctx context.Context, key SiteKey, auth teleservices.AuthPreference) error
 	// GetClusterAuthPreference returns cluster authentication preference
 	GetClusterAuthPreference(key SiteKey) (teleservices.AuthPreference, error)
 	// UpsertGithubConnector creates or updates a Github connector
-	UpsertGithubConnector(key SiteKey, conn teleservices.GithubConnector) error
+	UpsertGithubConnector(ctx context.Context, key SiteKey, conn teleservices.GithubConnector) error
 	// GetGithubConnector returns a Github connector by its name
 	GetGithubConnector(key SiteKey, name string, withSecrets bool) (teleservices.GithubConnector, error)
 	// GetGithubConnectors returns all Github connectors
 	GetGithubConnectors(key SiteKey, withSecrets bool) ([]teleservices.GithubConnector, error)
 	// DeleteGithubConnector deletes a Github connector by name
-	DeleteGithubConnector(key SiteKey, name string) error
+	DeleteGithubConnector(ctx context.Context, key SiteKey, name string) error
 	// UpsertAuthGateway updates auth gateway configuration
-	UpsertAuthGateway(SiteKey, storage.AuthGateway) error
+	UpsertAuthGateway(context.Context, SiteKey, storage.AuthGateway) error
 	// GetAuthGateway returns auth gateway configuration
 	GetAuthGateway(SiteKey) (storage.AuthGateway, error)
 }

@@ -45,271 +45,271 @@ var (
 		Name:     OperationStarted,
 		Code:     OperationExpandStartCode,
 		Severity: events.SeverityInfo,
-		Message:  "Node {{.hostname}}/{{.ip}}/{{.role}} is joining the cluster {{.cluster}}",
+		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} is joining the cluster",
 	}
 	// OperationExpandComplete is emitted when a node has successfully joined the cluster.
 	OperationExpandComplete = events.Event{
 		Name:     OperationCompleted,
 		Code:     OperationExpandCompleteCode,
 		Severity: events.SeverityInfo,
-		Message:  "Node {{.hostname}}/{{.ip}}/{{.role}} has joined the cluster {{.cluster}}",
+		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} has joined the cluster",
 	}
 	// OperationExpandFailure is emitted when a node fails to join the cluster.
 	OperationExpandFailure = events.Event{
 		Name:     OperationFailed,
 		Code:     OperationExpandFailureCode,
 		Severity: events.SeverityError,
-		Message:  "Node {{.hostname}}/{{.ip}}/{{.role}} has failed to join the cluster {{.cluster}}",
+		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} has failed to join the cluster",
 	}
 	// OperationShrinkStart is emitted when a node is leaving the cluster.
 	OperationShrinkStart = events.Event{
 		Name:     OperationStarted,
 		Code:     OperationShrinkStartCode,
 		Severity: events.SeverityInfo,
-		Message:  "Node {{.hostname}}/{{.ip}}/{{.role}} is leaving the cluster {{.cluster}}",
+		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} is leaving the cluster",
 	}
 	// OperationShrinkComplete is emitted when a node has left the cluster.
 	OperationShrinkComplete = events.Event{
 		Name:     OperationCompleted,
 		Code:     OperationShrinkCompleteCode,
 		Severity: events.SeverityInfo,
-		Message:  "Node {{.hostname}}/{{.ip}}/{{.role}} has left the cluster {{.cluster}}",
+		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} has left the cluster",
 	}
 	// OperationShrinkFailure is emitted when a node fails to leave the cluster.
 	OperationShrinkFailure = events.Event{
 		Name:     OperationFailed,
 		Code:     OperationShrinkFailureCode,
 		Severity: events.SeverityError,
-		Message:  "Node {{.hostname}}/{{.ip}}/{{.role}} has failed to leave the cluster {{.cluster}}",
+		Message:  "Node {{.hostname}} ({{.ip}}) with role {{.role}} has failed to leave the cluster",
 	}
 	// OperationUpdateStart is emitted when cluster upgrade is started.
 	OperationUpdateStart = events.Event{
 		Name:     OperationStarted,
 		Code:     OperationUpdateStartCode,
 		Severity: events.SeverityInfo,
-		Message:  "Cluster {{.cluster}} is upgrading to version {{.version}}",
+		Message:  "Cluster is upgrading to version {{.version}}",
 	}
 	// OperationUpdateCompete is emitted when cluster upgrade successfully finishes.
 	OperationUpdateComplete = events.Event{
 		Name:     OperationCompleted,
 		Code:     OperationUpdateCompleteCode,
 		Severity: events.SeverityInfo,
-		Message:  "Cluster {{.cluster}} has been upgraded to version {{.version}}",
+		Message:  "Cluster has been upgraded to version {{.version}}",
 	}
 	// OperationUpdateFailure is emitted when cluster upgrade fails.
 	OperationUpdateFailure = events.Event{
 		Name:     OperationFailed,
 		Code:     OperationUpdateFailureCode,
 		Severity: events.SeverityError,
-		Message:  "Cluster {{.cluster}} upgrade to version {{.version}} has failed",
+		Message:  "Cluster upgrade to version {{.version}} has failed",
 	}
 	// OperationUninstallStart is emitted when cluster uninstall is launched.
 	OperationUninstallStart = events.Event{
 		Name:     OperationStarted,
 		Code:     OperationUninstallStartCode,
 		Severity: events.SeverityInfo,
-		Message:  "Cluster {{.cluster}} is being uninstalled",
+		Message:  "Cluster is being uninstalled",
 	}
 	// OperationUninstallComplete is emitted when cluster has been uninstalled.
 	OperationUninstallComplete = events.Event{
 		Name:     OperationCompleted,
 		Code:     OperationUninstallCompleteCode,
 		Severity: events.SeverityInfo,
-		Message:  "Cluster {{.cluster}} has been uninstalled",
+		Message:  "Cluster has been uninstalled",
 	}
 	// OperationUninstallFailure is emitted when cluster uninstall fails.
 	OperationUninstallFailure = events.Event{
 		Name:     OperationFailed,
 		Code:     OperationUninstallFailureCode,
 		Severity: events.SeverityError,
-		Message:  "Cluster {{.cluster}} uninstall has failed",
+		Message:  "Cluster uninstall has failed",
 	}
 	// OperationGCStart is emitted when garbage collection is started on a cluster.
 	OperationGCStart = events.Event{
 		Name:     OperationStarted,
 		Code:     OperationGCStartCode,
 		Severity: events.SeverityInfo,
-		Message:  "Running garbage collection on cluster {{.cluster}}",
+		Message:  "Running garbage collection on the cluster",
 	}
 	// OperationGCComplete is emitted when cluster garbage collection successfully completes.
 	OperationGCComplete = events.Event{
 		Name:     OperationCompleted,
 		Code:     OperationGCCompleteCode,
 		Severity: events.SeverityInfo,
-		Message:  "Garbage collection on cluster {{.cluster}} has finished",
+		Message:  "Garbage collection on the cluster has finished",
 	}
 	// OperationGCFailure is emitted when cluster garbage collection fails.
 	OperationGCFailure = events.Event{
 		Name:     OperationFailed,
 		Code:     OperationGCFailureCode,
 		Severity: events.SeverityError,
-		Message:  "Garbage collection on cluster {{.cluster}} has failed",
+		Message:  "Garbage collection on the cluster has failed",
 	}
 	// OperationEnvStart is emitted when cluster runtime environment update is launched.
 	OperationEnvStart = events.Event{
 		Name:     OperationStarted,
 		Code:     OperationEnvStartCode,
 		Severity: events.SeverityInfo,
-		Message:  "Updating runtime environment on cluster {{.cluster}}",
+		Message:  "Updating the cluster runtime environment",
 	}
 	// OperationEnvComplete is emitted when cluster runtime environment update successfully completes.
 	OperationEnvComplete = events.Event{
 		Name:     OperationCompleted,
 		Code:     OperationEnvCompleteCode,
 		Severity: events.SeverityInfo,
-		Message:  "Runtime environment on cluster {{.cluster}} has been updated",
+		Message:  "Cluster runtime environment has been updated",
 	}
 	// OperationEnvFailure is emitted when cluster runtime environment update fails.
 	OperationEnvFailure = events.Event{
 		Name:     OperationFailed,
 		Code:     OperationEnvFailureCode,
 		Severity: events.SeverityError,
-		Message:  "Failed to update runtime environment on cluster {{.cluster}}",
+		Message:  "Failed to update the cluster runtime environment",
 	}
 	// OperationConfigStart is emitted when cluster configuration update launches.
 	OperationConfigStart = events.Event{
 		Name:     OperationStarted,
 		Code:     OperationConfigStartCode,
 		Severity: events.SeverityInfo,
-		Message:  "Updating cluster {{.cluster}} configuration",
+		Message:  "Updating the cluster configuration",
 	}
 	// OperationConfigComplete is emitted when cluster configuration update successfully completes.
 	OperationConfigComplete = events.Event{
 		Name:     OperationCompleted,
 		Code:     OperationConfigCompleteCode,
 		Severity: events.SeverityInfo,
-		Message:  "Cluster {{.cluster}} configuration has been updated",
+		Message:  "Cluster configuration has been updated",
 	}
 	// OperationConfigFailure is emitted when cluster configuration update fails.
 	OperationConfigFailure = events.Event{
 		Name:     OperationFailed,
 		Code:     OperationConfigFailureCode,
 		Severity: events.SeverityError,
-		Message:  "Failed to update cluster {{.cluster}} configuration",
+		Message:  "Failed to update the cluster configuration",
 	}
-	// ResourceUserCreated is emitted when a user is created/updated.
-	ResourceUserCreated = events.Event{
-		Name:     ResourceCreated,
-		Code:     ResourceUserCreatedCode,
+	// UserCreated is emitted when a user is created/updated.
+	UserCreated = events.Event{
+		Name:     UserCreatedEvent,
+		Code:     UserCreatedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} created user {{.name}}",
 	}
-	// ResourceUserDeleted is emitted when a user is deleted.
-	ResourceUserDeleted = events.Event{
-		Name:     ResourceDeleted,
-		Code:     ResourceUserDeletedCode,
+	// UserDeleted is emitted when a user is deleted.
+	UserDeleted = events.Event{
+		Name:     UserDeletedEvent,
+		Code:     UserDeletedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} deleted user {{.name}}",
 	}
-	// ResourceTokenCreated is emitted when a token is created/updated.
-	ResourceTokenCreated = events.Event{
-		Name:     ResourceCreated,
-		Code:     ResourceTokenCreatedCode,
+	// TokenCreated is emitted when a token is created/updated.
+	TokenCreated = events.Event{
+		Name:     TokenCreatedEvent,
+		Code:     TokenCreatedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} created token for user {{.owner}}",
 	}
-	// ResourceTokenDeleted is emitted when a token is deleted.
-	ResourceTokenDeleted = events.Event{
-		Name:     ResourceDeleted,
-		Code:     ResourceTokenDeletedCode,
+	// TokenDeleted is emitted when a token is deleted.
+	TokenDeleted = events.Event{
+		Name:     TokenDeletedEvent,
+		Code:     TokenDeletedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} deleted token for user {{.owner}}",
 	}
-	// ResourceGithubConnectorCreated is emitted when a Github connector is created/updated.
-	ResourceGithubConnectorCreated = events.Event{
-		Name:     ResourceCreated,
-		Code:     ResourceGithubConnectorCreatedCode,
+	// GithubConnectorCreated is emitted when a Github connector is created/updated.
+	GithubConnectorCreated = events.Event{
+		Name:     GithubConnectorCreatedEvent,
+		Code:     GithubConnectorCreatedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} created Github connector {{.name}}",
 	}
-	// ResourceGithubConnectorDeleted is emitted when a Github connector is deleted.
-	ResourceGithubConnectorDeleted = events.Event{
-		Name:     ResourceDeleted,
-		Code:     ResourceGithubConnectorDeletedCode,
+	// GithubConnectorDeleted is emitted when a Github connector is deleted.
+	GithubConnectorDeleted = events.Event{
+		Name:     GithubConnectorDeletedEvent,
+		Code:     GithubConnectorDeletedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} deleted Github connector {{.name}}",
 	}
-	// ResourceLogForwarderCreated is emitted when a log forwarder is created/updated.
-	ResourceLogForwarderCreated = events.Event{
-		Name:     ResourceCreated,
-		Code:     ResourceLogForwarderCreatedCode,
+	// LogForwarderCreated is emitted when a log forwarder is created/updated.
+	LogForwarderCreated = events.Event{
+		Name:     LogForwarderCreatedEvent,
+		Code:     LogForwarderCreatedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} created log forwarder {{.name}}",
 	}
-	// ResourceLogForwarderDeleted is emitted when a log forwarder is deleted.
-	ResourceLogForwarderDeleted = events.Event{
-		Name:     ResourceDeleted,
-		Code:     ResourceLogForwarderDeletedCode,
+	// LogForwarderDeleted is emitted when a log forwarder is deleted.
+	LogForwarderDeleted = events.Event{
+		Name:     LogForwarderDeletedEvent,
+		Code:     LogForwarderDeletedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} deleted log forwarder {{.name}}",
 	}
-	// ResourceTLSKeyPairCreated is emitted when cluster web certificate is updated.
-	ResourceTLSKeyPairCreated = events.Event{
-		Name:     ResourceCreated,
-		Code:     ResourceTLSKeyPairCreatedCode,
+	// TLSKeyPairCreated is emitted when cluster web certificate is updated.
+	TLSKeyPairCreated = events.Event{
+		Name:     TLSKeyPairCreatedEvent,
+		Code:     TLSKeyPairCreatedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} installed cluster web certificate",
 	}
-	// ResourceTLSKeyPairDeleted is emitted when cluster web certificate is deleted.
-	ResourceTLSKeyPairDeleted = events.Event{
-		Name:     ResourceDeleted,
-		Code:     ResourceLogForwarderDeletedCode,
+	// TLSKeyPairDeleted is emitted when cluster web certificate is deleted.
+	TLSKeyPairDeleted = events.Event{
+		Name:     TLSKeyPairDeletedEvent,
+		Code:     TLSKeyPairDeletedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} deleted cluster web certificate",
 	}
-	// ResourceAuthPreferenceCreated is emitted when cluster auth preference is updated.
-	ResourceAuthPreferenceCreated = events.Event{
-		Name:     ResourceCreated,
-		Code:     ResourceAuthPreferenceCreatedCode,
+	// AuthPreferenceUpdated is emitted when cluster auth preference is updated.
+	AuthPreferenceUpdated = events.Event{
+		Name:     AuthPreferenceUpdatedEvent,
+		Code:     AuthPreferenceUpdatedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} updated cluster authentication preference",
 	}
-	// ResourceSMTPConfigCreated is emitted when SMTP configuration is created/updated.
-	ResourceSMTPConfigCreated = events.Event{
-		Name:     ResourceCreated,
-		Code:     ResourceSMTPConfigCreatedCode,
+	// SMTPConfigCreated is emitted when SMTP configuration is created/updated.
+	SMTPConfigCreated = events.Event{
+		Name:     SMTPConfigCreatedEvent,
+		Code:     SMTPConfigCreatedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} updated cluster SMTP configuration",
 	}
-	// ResourceSMTPConfigDeleted is emitted when SMTP configuration is deleted.
-	ResourceSMTPConfigDeleted = events.Event{
-		Name:     ResourceDeleted,
-		Code:     ResourceSMTPConfigDeletedCode,
+	// SMTPConfigDeleted is emitted when SMTP configuration is deleted.
+	SMTPConfigDeleted = events.Event{
+		Name:     SMTPConfigDeletedEvent,
+		Code:     SMTPConfigDeletedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} deleted cluster SMTP configuration",
 	}
-	// ResourceAlertCreated is emitted when monitoring alert is created/updated.
-	ResourceAlertCreated = events.Event{
-		Name:     ResourceCreated,
-		Code:     ResourceAlertCreatedCode,
+	// AlertCreated is emitted when monitoring alert is created/updated.
+	AlertCreated = events.Event{
+		Name:     AlertCreatedEvent,
+		Code:     AlertCreatedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} created monitoring alert {{.name}}",
 	}
-	// ResourceAlertDeleted is emitted when monitoring alert is deleted.
-	ResourceAlertDeleted = events.Event{
-		Name:     ResourceDeleted,
-		Code:     ResourceAlertDeletedCode,
+	// AlertDeleted is emitted when monitoring alert is deleted.
+	AlertDeleted = events.Event{
+		Name:     AlertDeletedEvent,
+		Code:     AlertDeletedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} deleted monitoring alert {{.name}}",
 	}
-	// ResourceAlertTargetCreated is emitted when monitoring alert target is created/updated.
-	ResourceAlertTargetCreated = events.Event{
-		Name:     ResourceCreated,
-		Code:     ResourceAlertTargetCreatedCode,
+	// AlertTargetCreated is emitted when monitoring alert target is created/updated.
+	AlertTargetCreated = events.Event{
+		Name:     AlertTargetCreatedEvent,
+		Code:     AlertTargetCreatedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} updated monitoring alert target",
 	}
-	// ResourceAlertTargetDeleted is emitted when monitoring alert target is deleted.
-	ResourceAlertTargetDeleted = events.Event{
-		Name:     ResourceDeleted,
-		Code:     ResourceAlertTargetDeletedCode,
+	// AlertTargetDeleted is emitted when monitoring alert target is deleted.
+	AlertTargetDeleted = events.Event{
+		Name:     AlertTargetDeletedEvent,
+		Code:     AlertTargetDeletedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} deleted monitoring alert target",
 	}
-	// ResourceAuthGatewayCreated is emitted when cluster auth gateway settings are updated.
-	ResourceAuthGatewayCreated = events.Event{
-		Name:     ResourceCreated,
-		Code:     ResourceAuthGatewayCreatedCode,
+	// AuthGatewayUpdated is emitted when cluster auth gateway settings are updated.
+	AuthGatewayUpdated = events.Event{
+		Name:     AuthGatewayUpdatedEvent,
+		Code:     AuthGatewayUpdatedCode,
 		Severity: events.SeverityInfo,
 		Message:  "User {{.user}} updated cluster authentication gateway settings",
 	}
@@ -325,14 +325,14 @@ var (
 		Name:     ClusterDegraded,
 		Code:     ClusterUnhealthyCode,
 		Severity: events.SeverityWarning,
-		Message:  "Cluster {{.cluster}} is degraded: {{.reason}}",
+		Message:  "Cluster is degraded: {{.reason}}",
 	}
 	// ClusterHealthy is emitted when cluster becomes healthy.
 	ClusterHealthy = events.Event{
 		Name:     ClusterActivated,
 		Code:     ClusterHealthyCode,
 		Severity: events.SeverityInfo,
-		Message:  "Cluster {{.cluster}} has become healthy",
+		Message:  "Cluster has become healthy",
 	}
 	// ApplicationInstall is emitted when a new application image is installed.
 	ApplicationInstall = events.Event{
@@ -364,7 +364,7 @@ var (
 	}
 )
 
-var (
+const (
 	// OpereationInstallStartCode is the install operation start event code.
 	OperationInstallStartCode = "G0001I"
 	// OperationInstallCompleteCode is the install operation complete event code.
@@ -413,42 +413,42 @@ var (
 	OperationConfigCompleteCode = "G0016I"
 	// OperationConfigFailureCode is the cluster configuration update operation failure event code.
 	OperationConfigFailureCode = "G0016E"
-	// ResourceUserCreatedCode is the user resource created event code.
-	ResourceUserCreatedCode = "G1000I"
-	// ResourceUserDeletedCode is the user resource deleted event code.
-	ResourceUserDeletedCode = "G2000I"
-	// ResourceTokenCreatedCode is the user token resource created event code.
-	ResourceTokenCreatedCode = "G1001I"
-	// ResourceTokenDeletedCode is the user token resource deleted event code.
-	ResourceTokenDeletedCode = "G2001I"
-	// ResourceGithubConnectorCreatedCode is the Github connector resource created event code.
-	ResourceGithubConnectorCreatedCode = "G1002I"
-	// ResourceGithubConnectorDeletedCode is the Github connector resource deleted event code.
-	ResourceGithubConnectorDeletedCode = "G2002I"
-	// ResourceLogForwarderCreatedCode is the log forwarder resource created event code.
-	ResourceLogForwarderCreatedCode = "G1003I"
-	// ResourceLogForwarderDeletedCode is the log forwarder resource deleted event code.
-	ResourceLogForwarderDeletedCode = "G2003I"
-	// ResourceTLSKeyPairCreatedCode is the TLS key pair resource created event code.
-	ResourceTLSKeyPairCreatedCode = "G1004I"
-	// ResourceTLSKeyPairDeletedCode is the TLS key pair resource deleted event code.
-	ResourceTLSKeyPairDeletedCode = "G2004I"
-	// ResourceAuthPreferenceCreatedCode is the cluster auth preference resource updated event code.
-	ResourceAuthPreferenceCreatedCode = "G1005I"
-	// ResourceSMTPConfigCreatedCode is the SMTP configuration resource updated event code.
-	ResourceSMTPConfigCreatedCode = "G1006I"
-	// ResourceSMTPConfigDeletedCode is the SMTP configuration resource deleted event code.
-	ResourceSMTPConfigDeletedCode = "G2006I"
-	// ResourceAlertCreatedCode is the monitoring alert resource created event code.
-	ResourceAlertCreatedCode = "G1007I"
-	// ResourceAlertDeletedCode is the monitoring alert resource deleted event code.
-	ResourceAlertDeletedCode = "G2007I"
-	// ResourceAlertTargetCreatedCode is the monitoring alert target resource created event code.
-	ResourceAlertTargetCreatedCode = "G1008I"
-	// ResourceAlertTargetDeletedCode is the monitoring alert target resource deleted event code.
-	ResourceAlertTargetDeletedCode = "G2008I"
-	// ResourceAuthGatewayCreatedCode is the auth gateway resource updated event code.
-	ResourceAuthGatewayCreatedCode = "G1009I"
+	// UserCreatedCode is the user created event code.
+	UserCreatedCode = "G1000I"
+	// UserDeletedCode is the user deleted event code.
+	UserDeletedCode = "G2000I"
+	// TokenCreatedCode is the user token created event code.
+	TokenCreatedCode = "G1001I"
+	// TokenDeletedCode is the user token deleted event code.
+	TokenDeletedCode = "G2001I"
+	// GithubConnectorCreatedCode is the Github connector created event code.
+	GithubConnectorCreatedCode = "G1002I"
+	// GithubConnectorDeletedCode is the Github connector deleted event code.
+	GithubConnectorDeletedCode = "G2002I"
+	// LogForwarderCreatedCode is the log forwarder created event code.
+	LogForwarderCreatedCode = "G1003I"
+	// LogForwarderDeletedCode is the log forwarder deleted event code.
+	LogForwarderDeletedCode = "G2003I"
+	// TLSKeyPairCreatedCode is the TLS key pair created event code.
+	TLSKeyPairCreatedCode = "G1004I"
+	// TLSKeyPairDeletedCode is the TLS key pair deleted event code.
+	TLSKeyPairDeletedCode = "G2004I"
+	// AuthPreferenceUpdatedCode is the cluster auth preference updated event code.
+	AuthPreferenceUpdatedCode = "G1005I"
+	// SMTPConfigCreatedCode is the SMTP configuration updated event code.
+	SMTPConfigCreatedCode = "G1006I"
+	// SMTPConfigDeletedCode is the SMTP configuration deleted event code.
+	SMTPConfigDeletedCode = "G2006I"
+	// AlertCreatedCode is the monitoring alert created event code.
+	AlertCreatedCode = "G1007I"
+	// AlertDeletedCode is the monitoring alert deleted event code.
+	AlertDeletedCode = "G2007I"
+	// AlertTargetCreatedCode is the monitoring alert target created event code.
+	AlertTargetCreatedCode = "G1008I"
+	// AlertTargetDeletedCode is the monitoring alert target deleted event code.
+	AlertTargetDeletedCode = "G2008I"
+	// AuthGatewayUpdatedCode is the auth gateway updated event code.
+	AuthGatewayUpdatedCode = "G1009I"
 	// UserInviteCreatedCode is the user invite created event code.
 	UserInviteCreatedCode = "G1010I"
 	// ClusterUnhealthyCode is the cluster goes unhealthy event code.
@@ -463,4 +463,66 @@ var (
 	ApplicationRollbackCode = "G4002I"
 	// ApplicationUninstallCode is the application release uninstall event code.
 	ApplicationUninstallCode = "G4003I"
+)
+
+const (
+	// OperationStarted fires when an operation starts.
+	OperationStarted = "operation.started"
+	// OperationCompleted fires when an operation completes successfully.
+	OperationCompleted = "operation.completed"
+	// OperationFailed fires when an operation completes with error.
+	OperationFailed = "operation.failed"
+
+	// AppInstalled fires when an application image is installed.
+	AppInstalled = "application.installed"
+	// AppUpgraded fires when an application release is upgraded.
+	AppUpgraded = "application.upgraded"
+	// AppRolledBack fires when an application release is rolled back.
+	AppRolledBack = "application.rolledback"
+	// AppUninstalled fires when an application release is uninstalled.
+	AppUninstalled = "application.uninstalled"
+
+	// UserCreatedEvent fires when a user is created/updated.
+	UserCreatedEvent = "user.created"
+	// UserDeletedEvent fires when a user is deleted.
+	UserDeletedEvent = "user.deleted"
+	// TokenCreatedEvent fires when a token is created/updated.
+	TokenCreatedEvent = "token.created"
+	// TokenDeletedEvent fires when a token is deleted.
+	TokenDeletedEvent = "token.deleted"
+	// GithubConnectorCreatedEvent fires when a Github connector is created/updated.
+	GithubConnectorCreatedEvent = "github.created"
+	// GithubConnectorDeletedEvent fires when a Github connector is deleted.
+	GithubConnectorDeletedEvent = "github.deleted"
+	// LogForwarderCreatedEvent fires when a log forwarder is created/updated.
+	LogForwarderCreatedEvent = "logforwarder.created"
+	// LogForwarderDeletedEvent fires when a log forwarder is deleted.
+	LogForwarderDeletedEvent = "logforwarder.delete"
+	// TLSKeyPairCreatedEvent fires when a TLS key pair is created/updated.
+	TLSKeyPairCreatedEvent = "tlskeypair.created"
+	// TLSKeyPairDeletedEvent fires when a TLS key pair is deleted.
+	TLSKeyPairDeletedEvent = "tlskeypair.deleted"
+	// AuthPreferenceUpdatedEvent fires when cluster auth preference is updated.
+	AuthPreferenceUpdatedEvent = "authpreference.updated"
+	// SMTPConfigCreatedEvent fires when SMTP config is created/updated.
+	SMTPConfigCreatedEvent = "smtpconfig.created"
+	// SMTPConfigDeletedEvent fires when SMTP config is deleted.
+	SMTPConfigDeletedEvent = "smtpconfig.deleted"
+	// AlertCreatedEvent fires when monitoring alert is created/updated.
+	AlertCreatedEvent = "alert.created"
+	// AlertDeletedEvent fires when monitoring alert is deleted.
+	AlertDeletedEvent = "alert.deleted"
+	// AlertTargetCreatedEvent fires when monitoring alert target is created/updated.
+	AlertTargetCreatedEvent = "alerttarget.created"
+	// AlertTargetDeletedEvent fires when monitoring alert target is deleted.
+	AlertTargetDeletedEvent = "alerttarget.deleted"
+	// AuthGatewayUpdatedEvent fires when auth gateway settings are updated.
+	AuthGatewayUpdatedEvent = "authgateway.updated"
+	// InviteCreated fires when a new user invitation is generated.
+	InviteCreated = "invite.created"
+
+	// ClusterDegraded fires when cluster health check fails.
+	ClusterDegraded = "cluster.degraded"
+	// ClusterActivated fires when cluster becomes healthy again.
+	ClusterActivated = "cluster.activated"
 )

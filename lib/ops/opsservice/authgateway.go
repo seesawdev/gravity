@@ -52,7 +52,7 @@ func (o *Operator) UpsertAuthGateway(ctx context.Context, key ops.SiteKey, gw st
 	if err != nil {
 		return trace.Wrap(err)
 	}
-	events.Emit(ctx, o, events.ResourceAuthGatewayCreated, events.Fields{})
+	events.Emit(ctx, o, events.AuthGatewayUpdated, events.Fields{})
 	return nil
 }
 

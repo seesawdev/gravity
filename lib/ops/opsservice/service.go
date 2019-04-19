@@ -352,7 +352,7 @@ func (o *Operator) CreateAPIKey(ctx context.Context, req ops.NewAPIKeyRequest) (
 	if err != nil {
 		return nil, trace.Wrap(err)
 	}
-	events.Emit(ctx, o, events.ResourceTokenCreated, events.Fields{
+	events.Emit(ctx, o, events.TokenCreated, events.Fields{
 		events.FieldOwner: key.UserEmail,
 	})
 	return key, nil
@@ -367,7 +367,7 @@ func (o *Operator) DeleteAPIKey(ctx context.Context, userEmail, token string) er
 	if err := o.cfg.Users.DeleteAPIKey(userEmail, token); err != nil {
 		return trace.Wrap(err)
 	}
-	events.Emit(ctx, o, events.ResourceTokenDeleted, events.Fields{
+	events.Emit(ctx, o, events.TokenDeleted, events.Fields{
 		events.FieldOwner: userEmail,
 	})
 	return nil

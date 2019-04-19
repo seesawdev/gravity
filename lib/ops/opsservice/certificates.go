@@ -41,7 +41,7 @@ func (o *Operator) DeleteClusterCertificate(ctx context.Context, key ops.SiteKey
 	if err != nil {
 		return trace.Wrap(err)
 	}
-	events.Emit(ctx, o, events.ResourceTLSKeyPairDeleted, events.Fields{})
+	events.Emit(ctx, o, events.TLSKeyPairDeleted, events.Fields{})
 	return nil
 }
 
@@ -79,7 +79,7 @@ func (o *Operator) UpdateClusterCertificate(ctx context.Context, req ops.UpdateC
 		return nil, trace.Wrap(err)
 	}
 
-	events.Emit(ctx, o, events.ResourceTLSKeyPairCreated, events.Fields{})
+	events.Emit(ctx, o, events.TLSKeyPairCreated, events.Fields{})
 
 	return &ops.ClusterCertificate{
 		Certificate: req.Certificate,

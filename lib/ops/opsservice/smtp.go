@@ -62,7 +62,7 @@ func (o *Operator) UpdateSMTPConfig(ctx context.Context, key ops.SiteKey, config
 	if err != nil {
 		return trace.Wrap(err)
 	}
-	events.Emit(ctx, o, events.ResourceSMTPConfigCreated, events.Fields{})
+	events.Emit(ctx, o, events.SMTPConfigCreated, events.Fields{})
 	return nil
 }
 
@@ -81,7 +81,7 @@ func (o *Operator) DeleteSMTPConfig(ctx context.Context, key ops.SiteKey) error 
 		return trace.Wrap(err)
 	}
 
-	events.Emit(ctx, o, events.ResourceSMTPConfigDeleted, events.Fields{})
+	events.Emit(ctx, o, events.SMTPConfigDeleted, events.Fields{})
 	return nil
 }
 

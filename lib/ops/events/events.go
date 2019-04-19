@@ -53,34 +53,3 @@ func emit(ctx context.Context, operator ops.Operator, event events.Event, fields
 		Fields:  events.EventFields(fields),
 	})
 }
-
-const (
-	// OperationStarted fires when an operation starts.
-	OperationStarted = "operation.started"
-	// OperationCompleted fires when an operation completes successfully.
-	OperationCompleted = "operation.completed"
-	// OperationFailed fires when an operation completes with error.
-	OperationFailed = "operation.failed"
-
-	// AppInstalled fires when an application image is installed.
-	AppInstalled = "application.installed"
-	// AppUpgraded fires when an application release is upgraded.
-	AppUpgraded = "application.upgraded"
-	// AppRolledBack fires when an application release is rolled back.
-	AppRolledBack = "application.rolledback"
-	// AppUninstalled fires when an application release is uninstalled.
-	AppUninstalled = "application.uninstalled"
-
-	// ResourceCreated fires when a Gravity resource is created or updated.
-	ResourceCreated = "resource.created"
-	// ResourceDeleted fires when a Gravity resource is deleted.
-	ResourceDeleted = "resource.deleted"
-
-	// InviteCreated fires when a new user invitation is generated.
-	InviteCreated = "invite.created"
-
-	// ClusterDegraded fires when cluster health check fails.
-	ClusterDegraded = "cluster.degraded"
-	// ClusterActivated fires when cluster becomes healthy again.
-	ClusterActivated = "cluster.activated"
-)

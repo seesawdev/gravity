@@ -31,7 +31,7 @@ func (o *Operator) UpsertUser(ctx context.Context, key ops.SiteKey, user teleser
 	if err := o.cfg.Users.UpsertUser(user); err != nil {
 		return trace.Wrap(err)
 	}
-	events.Emit(ctx, o, events.ResourceUserCreated, events.Fields{
+	events.Emit(ctx, o, events.UserCreated, events.Fields{
 		events.FieldName: user.GetName(),
 	})
 	return nil
@@ -52,7 +52,7 @@ func (o *Operator) DeleteUser(ctx context.Context, key ops.SiteKey, name string)
 	if err := o.cfg.Users.DeleteUser(name); err != nil {
 		return trace.Wrap(err)
 	}
-	events.Emit(ctx, o, events.ResourceUserDeleted, events.Fields{
+	events.Emit(ctx, o, events.UserDeleted, events.Fields{
 		events.FieldName: name,
 	})
 	return nil
@@ -63,7 +63,7 @@ func (o *Operator) UpsertClusterAuthPreference(ctx context.Context, key ops.Site
 	if err := o.cfg.Users.SetAuthPreference(auth); err != nil {
 		return trace.Wrap(err)
 	}
-	events.Emit(ctx, o, events.ResourceAuthPreferenceCreated, events.Fields{})
+	events.Emit(ctx, o, events.AuthPreferenceUpdated, events.Fields{})
 	return nil
 }
 
@@ -77,7 +77,7 @@ func (o *Operator) UpsertGithubConnector(ctx context.Context, key ops.SiteKey, c
 	if err := o.cfg.Users.UpsertGithubConnector(connector); err != nil {
 		return trace.Wrap(err)
 	}
-	events.Emit(ctx, o, events.ResourceGithubConnectorCreated, events.Fields{
+	events.Emit(ctx, o, events.GithubConnectorCreated, events.Fields{
 		events.FieldName: connector.GetName(),
 	})
 	return nil
@@ -102,7 +102,7 @@ func (o *Operator) DeleteGithubConnector(ctx context.Context, key ops.SiteKey, n
 	if err := o.cfg.Users.DeleteGithubConnector(name); err != nil {
 		return trace.Wrap(err)
 	}
-	events.Emit(ctx, o, events.ResourceGithubConnectorDeleted, events.Fields{
+	events.Emit(ctx, o, events.GithubConnectorDeleted, events.Fields{
 		events.FieldName: name,
 	})
 	return nil

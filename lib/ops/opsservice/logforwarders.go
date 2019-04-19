@@ -85,7 +85,7 @@ func (o *Operator) CreateLogForwarder(ctx context.Context, key ops.SiteKey, forw
 		return trace.Wrap(err)
 	}
 
-	events.Emit(ctx, o, events.ResourceLogForwarderCreated, events.Fields{
+	events.Emit(ctx, o, events.LogForwarderCreated, events.Fields{
 		events.FieldName: forwarder.GetName(),
 	})
 
@@ -109,7 +109,7 @@ func (o *Operator) UpdateLogForwarder(ctx context.Context, key ops.SiteKey, forw
 		return trace.Wrap(err)
 	}
 
-	events.Emit(ctx, o, events.ResourceLogForwarderCreated, events.Fields{
+	events.Emit(ctx, o, events.LogForwarderCreated, events.Fields{
 		events.FieldName: forwarder.GetName(),
 	})
 
@@ -133,7 +133,7 @@ func (o *Operator) DeleteLogForwarder(ctx context.Context, key ops.SiteKey, name
 		return trace.Wrap(err)
 	}
 
-	events.Emit(ctx, o, events.ResourceLogForwarderDeleted, events.Fields{
+	events.Emit(ctx, o, events.LogForwarderDeleted, events.Fields{
 		events.FieldName: name,
 	})
 

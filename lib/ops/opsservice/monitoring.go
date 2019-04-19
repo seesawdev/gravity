@@ -112,7 +112,7 @@ func (o *Operator) UpdateAlert(ctx context.Context, key ops.SiteKey, alert stora
 		return trace.Wrap(err)
 	}
 
-	events.Emit(ctx, o, events.ResourceAlertCreated, events.Fields{
+	events.Emit(ctx, o, events.AlertCreated, events.Fields{
 		events.FieldName: alert.GetName(),
 	})
 	return nil
@@ -152,7 +152,7 @@ func (o *Operator) DeleteAlert(ctx context.Context, key ops.SiteKey, name string
 		return trace.Wrap(rigging.ConvertError(err))
 	}
 
-	events.Emit(ctx, o, events.ResourceAlertDeleted, events.Fields{
+	events.Emit(ctx, o, events.AlertDeleted, events.Fields{
 		events.FieldName: name,
 	})
 	return nil
@@ -204,7 +204,7 @@ func (o *Operator) UpdateAlertTarget(ctx context.Context, key ops.SiteKey, targe
 		return trace.Wrap(err)
 	}
 
-	events.Emit(ctx, o, events.ResourceAlertTargetCreated, events.Fields{})
+	events.Emit(ctx, o, events.AlertTargetCreated, events.Fields{})
 	return nil
 
 }
@@ -224,7 +224,7 @@ func (o *Operator) DeleteAlertTarget(ctx context.Context, key ops.SiteKey) error
 		return trace.Wrap(err)
 	}
 
-	events.Emit(ctx, o, events.ResourceAlertTargetDeleted, events.Fields{})
+	events.Emit(ctx, o, events.AlertTargetDeleted, events.Fields{})
 	return nil
 }
 
